@@ -1,0 +1,17 @@
+name: Test Blyx package
+on:
+  push:
+    branches: [main]
+    paths: ['**.blyx']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  native:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: cargo install --locked --version 0.2.1 blyxc
+      - run: blyxc native-run tests.blyx
+      - run: blyxc native-run example.blyx | diff - expected/example.txt

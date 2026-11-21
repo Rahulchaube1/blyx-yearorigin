@@ -1,0 +1,24 @@
+use std::cli;
+use yearorigin;
+
+fn matches(actual: vector, expected: vector) -> bool {
+    if len(actual) != len(expected) { return false; }
+    let mut i = 0;
+    while i < len(expected) {
+        let delta = at(actual, i) - at(expected, i);
+        let limit = 0.000000001 + 0.000000001 * at(expected, i) * at(expected, i) / (1.0 + at(expected, i) * at(expected, i));
+        if !(delta >= -limit && delta <= limit) { return false; }
+        i += 1;
+    }
+    true
+}
+
+fn main() {
+    let infinity = 1.0e300 * 1.0e300;
+    if !matches(yearorigin_offset(1.0), [0, 0]) { stderr_line("case 1 failed"); process_exit(1); }
+    if !matches(yearorigin_offset(2.0), [365, 1]) { stderr_line("case 2 failed"); process_exit(1); }
+    if !matches(yearorigin_offset(401.0), [146097, 0]) { stderr_line("case 3 failed"); process_exit(1); }
+    if !matches(yearorigin_offset(10000.0), []) { stderr_line("case 4 failed"); process_exit(1); }
+    if !matches(yearorigin_offset(infinity), []) { stderr_line("case 5 failed"); process_exit(1); }
+    println!("passed");
+}
