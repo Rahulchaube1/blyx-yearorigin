@@ -1,4 +1,4 @@
-Blyx package artwork and bird marks. Pictograms from Lucide.
+This library depicts the Blyx penguin. Earlier editions used Lucide pictograms. Their licenses follow.
 
 ISC License
 
